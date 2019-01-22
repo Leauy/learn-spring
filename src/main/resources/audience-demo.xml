@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    <aop:config>
+        <aop:aspect ref="audience-demo">
+            <aop:pointcut id="performance"
+                          expression="execution(* com.nsfocus.aspect.Performance.perform(..))"
+            />
+            <aop:before
+                    pointcut-ref="performance"
+                    method="silenceCellPhones"/>
+            <aop:before
+                    pointcut-ref="performance"
+                    method="takeSeats"/>
+            <aop:after-returning
+                    pointcut-ref="performance"
+                    method="applause"
+            />
+            <aop:after-throwing
+                    method="demandRefund"
+                    pointcut-ref="performance"
+            />
+
+            <aop:around
+                    method="watchPerformance"
+                    pointcut-ref="performance"
+            />
+
+        </aop:aspect>
+    </aop:config>
+    <bean id="audience-demo" class="com.nsfocus.aspect.AudienceDemo"/>
+    <bean id="performanceDemo" class="com.nsfocus.aspect.PerformanceDemo"/>
+    <context:component-scan base-package="com.nsfocus.aspect"/>
+</beans>
