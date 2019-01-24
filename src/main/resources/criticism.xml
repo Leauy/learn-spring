@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="criticismEngine" class="com.nsfocus.aspect.CriticismEngineImpl">
+        <property name="criticismPool">
+            <list>
+                <value>sb</value>
+                <value>liuyang</value>
+                <value>sbsbsbs</value>
+            </list>
+        </property>
+    </bean>
+    <bean class="com.nsfocus.aspect.CriticAspect"
+    factory-method="aspectOf">
+        <property name="criticismEngine" ref="criticismEngine" />
+
+    </bean>
+</beans>
